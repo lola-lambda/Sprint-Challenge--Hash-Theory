@@ -6,9 +6,23 @@
 Answer *get_indices_of_item_weights(int *weights, int length, int limit)
 {
   HashTable *ht = create_hash_table(16);
+  Answer *answer = malloc(sizeof(Answer));
 
-  // YOUR CODE HERE
+  for (int i = 0; i < length; i++) {
+    int dif = limit - weights[i];
+    int match = hash_table_retrieve(ht, dif);
 
+    if (match != -1) {
+      answer->index_1 = i;
+      answer->index_2 = match;
+      destroy_hash_table(ht);
+      return answer;
+    } else {
+      hash_table_insert(ht, weights[i], i);
+    }
+  }
+
+  destroy_hash_table(ht);
   return NULL;
 }
 
